@@ -1,0 +1,3 @@
+C:/Users/mitco/CLionProjects/LexicalAnalyzer/cmake-build-debug/CMakeFiles/LexicalAnalyzer.dir
+C:/Users/mitco/CLionProjects/LexicalAnalyzer/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/mitco/CLionProjects/LexicalAnalyzer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
