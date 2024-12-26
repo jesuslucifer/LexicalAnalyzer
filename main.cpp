@@ -206,17 +206,17 @@ int lexer(std::ifstream &in, List<std::string> list) {
             buffer.clear();
         }
 
-        if (isDoubleOperator(ch, in.peek())) {
-            buffer += ch;
-            buffer += in.get();
-            list.insert(buffer, "OPERATOR");
-            buffer.clear();
-        }
-
         if (isOperator(ch)) {
-            buffer += ch;
-            list.insert(buffer, "OPERATOR");
-            buffer.clear();
+            if (isDoubleOperator(ch, in.peek())) {
+                buffer += ch;
+                buffer += in.get();
+                list.insert(buffer, "OPERATOR");
+                buffer.clear();
+            } else {
+                buffer += ch;
+                list.insert(buffer, "OPERATOR");
+                buffer.clear();
+            }
         }
 
         if (isSeparator(ch)) {
