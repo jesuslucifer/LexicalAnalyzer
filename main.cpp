@@ -157,6 +157,13 @@ bool isDelimiter(char delimiter) {
     return false;
 }
 
+bool isError(char ch) {
+    if (!isDelimiter(ch) && !isOperator(ch) && !isSeparator(ch)) {
+        return true;
+    }
+    return false;
+}
+
 int lexer(std::ifstream &in, List<std::string> list) {
     char ch;
     std::string buffer;
@@ -170,7 +177,7 @@ int lexer(std::ifstream &in, List<std::string> list) {
                 in.get(ch);
             } while ((isalpha(ch) || ch == '_' || isdigit(ch)) && !in.eof());
 
-            if (!isDelimiter(ch) && !isOperator(ch) && !isSeparator(ch)) {
+            if (isError(ch)) {
                 errorStr += "Invalid identifier: ";
                 errorStr += ch;
                 errorFlag = true;
@@ -196,7 +203,7 @@ int lexer(std::ifstream &in, List<std::string> list) {
                 in.get(ch);
             } while (isdigit(ch) && !in.eof());
 
-            if (!isDelimiter(ch) && !isOperator(ch) && !isSeparator(ch)) {
+            if (isError(ch)) {
                 errorStr += "Invalid digit: ";
                 errorStr += ch;
                 errorFlag = true;
@@ -225,7 +232,7 @@ int lexer(std::ifstream &in, List<std::string> list) {
             buffer.clear();
         }
 
-        if (!isDelimiter(ch) && !isOperator(ch) && !isSeparator(ch) && errorStr.empty()) {
+        if (isError(ch) && errorStr.empty()) {
             errorStr += "Invalid symbol: ";
             errorStr += ch;
             errorFlag = true;
@@ -240,7 +247,7 @@ int lexer(std::ifstream &in, List<std::string> list) {
     std::ofstream out("D:\\LexicalAnalyzer\\output.txt");
 
     if (errorFlag) {
-        out << "error";
+        out << "";
         return 1;
     }
 
@@ -254,7 +261,7 @@ int main() {
     std::ifstream in("D:\\LexicalAnalyzer\\test.txt");
 
     if (!in.is_open()) {
-        std::cerr << "Error in opening file" << std::endl;
+        std::cerr << "Error opening file" << std::endl;
     }
 
     lexer(in, list);
